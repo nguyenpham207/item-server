@@ -1,0 +1,35 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+    {% if cars.length > 0%}
+        <div>
+            <h2 class="display-6">All Cars</h2>
+            <div class="row">
+                {% for car in cars %}
+                    <div class="card" style="width: 18rem;">
+                        <h5 class="card-header">{{car.name}}</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {% if car.readyToEat %}
+                                    Ripe
+                                {% else %}
+                                    Not Ripe
+                                {% endif %}
+                            </h5>
+                            <p class="card-text">The color of this {{car.name}} is {{car.color}}</p>
+                            <div class="colorBox" style="background-color: {{fruit.color}}">
+
+                            </div>
+                            <a class="btn btn-info" href="/fruits/{{car.id}}">
+                                View {{car.name}}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div>
+            <h2 class="display-6">No cars yet... time to add some!</h2>
+        </div>
+    {% endif %}
+{% endblock %}

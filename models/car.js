@@ -12,7 +12,7 @@ const { Schema, model } = mongoose
 const carSchema = new Schema({
     name: String,
     color: String,
-    brandNew: Boolean,
+    carElectric: Boolean,
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'User'

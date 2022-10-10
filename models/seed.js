@@ -6,11 +6,11 @@ const db = mongoose.connection
 
 db.on('open', () => {
     const startCars = [
-        { name: "Rx7", color: "white", readyToEat: false },
-        { name: "evo 8", color: "grey", readyToEat: false },
-        { name: "Nsx", color: "red", readyToEat: false },
-        { name: "Wrx", color: "blue ", readyToEat: false },
-        { name: "s2000", color: "black", readyToEat: false },
+        { name: "Rx7", color: "white", electric: false },
+        { name: "evo 8", color: "grey", electric: false },
+        { name: "Nsx", color: "red", electric: false },
+        { name: "Wrx", color: "blue ", electric: false },
+        { name: "s2000", color: "black", electric: false },
     ]
    
     Car.remove({})
