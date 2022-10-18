@@ -14,14 +14,13 @@ const router = express.Router()
 // Routes
 /////////////////////////////////////////
 
-// GET route for sign up
-// renders a page with a signup form
-router.get('/signup', (req, res) => {
+//GEt route for signup
+router.get('/signup',(req,res) => {
     res.render('users/signup')
 })
 
-// POST route for sign up
-// talks to the database, gets data from the signup form, creates a new user if possible
+
+//sign up
 router.post('/signup', async (req, res) => {
     // this route will receive a req.body
     console.log('this is our initial req.body', req.body)
@@ -37,26 +36,22 @@ router.post('/signup', async (req, res) => {
         // if successful, console log the user(for now)
         .then(user => {
             console.log(user)
-            // res.status(201).json({ username: user.username})
             res.redirect('/users/login')
         })
         // if an error occurs, log the error
         .catch(err => {
             console.log(err)
-            // res.json(err)
-            // res.redirect(`/error?error=${err}`)
-            res.redirect(`/error?error=username%20already%20taken`)
+            res.redirect(`/error?error=${err}`)
         })
 })
 
-// GET route for logging in
-// renders a page with a signup form
+// GET route for login
 router.get('/login', (req, res) => {
     res.render('users/login')
 })
 
-// POST route for logging in
-// receives user credentials and creates a session
+
+// a route for log in
 router.post('/login', async (req, res) => {
     // get our data from the req body, saved as separate variables
     const { username, password } = req.body
@@ -75,44 +70,28 @@ router.post('/login', async (req, res) => {
                     // session object lives in our request
                     req.session.username = username
                     req.session.loggedIn = true
-                    req.session.userId = user.id
+                    req.session.userId = user.id 
 
-                    console.log('this is req.session', req.session) 
-
-                    // we'll send a 201 status and the user as json for now
-                    // we'll change this later for security purposes
-                    // res.status(201).json({ user: user.toObject() })
+                    console.log('this is req.session', req.session)
                     res.redirect('/cars')
                 } else {
-                    // res.json({ error: 'username or password incorrect' })
-                    res.redirect(`/error?error=username%20or%20password%20incorrect`)
+                    res.redirect('/error?error=username%20or%20password%20incorrect')
                 }
             } else {
-                // send an error message
-                // res.json({ error: 'user does not exist' })
                 res.redirect(`/error?error=user%20does%20not%20exist`)
             }
         })
-        .catch(err => {
-            // instead of res.json, we'll redirect to the error page
-            // and we'll pass the error to a req.query, which is anything after a ?
-            // res.json(err)
-            res.redirect(`/error?error=${err}`)
-        })
+        .catch(err => {res.redirect(`/error?error=${err}`)})
 })
 
-// GET
-// SENDS to the logout page
-router.get('/logout', (req, res) => {
+router.get('/logout', (req,res) => {
     const username = req.session.username
     const loggedIn = req.session.loggedIn
     const userId = req.session.userId
-
-    res.render('users/logout', { username, loggedIn, userId})
+    res.render('users/logout', {username,loggedIn,userId})
 })
 
-// DELETE -> runs the logout
-// /users/logout
+//DELETE
 // a route for log out 
 router.delete('/logout', (req, res) => {
     // destroy the session(eventually we'll redirect)
@@ -120,7 +99,6 @@ router.delete('/logout', (req, res) => {
         console.log('req.session after logout', req.session)
         console.log('err on logout?', err)
 
-        // res.sendStatus(204)
         res.redirect('/')
     })
 })
